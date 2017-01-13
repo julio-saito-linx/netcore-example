@@ -7,12 +7,26 @@ class Program
     static void Main(string[] args)
     {
         List<String> arguments = new List<String>(args);
-        // Map = Select | Enumerable.Range(1, 10).Select(x => x + 2);
-        // Reduce = Aggregate | Enumerable.Range(1, 10).Aggregate(0, (acc, x) => acc + x);
-        // Filter = Where | Enumerable.Range(1, 10).Where(x => x % 2 == 0);
+        var allNumeric = true;
+        var numberList = new List<double>();
+        arguments.ForEach(x => {
+            int n;
+            bool isNumeric = int.TryParse(x, out n);
+            if (!isNumeric) {
+                allNumeric = false;
+                return;
+            } else {
+                numberList.Add(n);
+            }
+        });
 
-        // Console.WriteLine("your args" + arguments.Join());
+        if (allNumeric) {
+            var sum = numberList.Sum();
+            numberList.Sort((x, y) => (int)x - (int)y);
+        } else {
+            arguments.Sort();
+        }
 
-        Console.WriteLine(arguments.Aggregate((i, j) => i + ", " + j));        
+        Console.WriteLine(arguments.Aggregate((i, j) => i + ", " + j));
     }
 }
